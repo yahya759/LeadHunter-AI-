@@ -2,7 +2,7 @@
 title: LeadHunter AI
 emoji: 🤖
 colorFrom: blue
-colorTo: cyan
+colorTo: indigo
 sdk: docker
 pinned: false
 ---

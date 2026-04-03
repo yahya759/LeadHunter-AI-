@@ -20,27 +20,29 @@ def main():
         return
 
     if len(sys.argv) >= 3:
-        industry = sys.argv[1].strip()
+        job_title = sys.argv[1].strip()
         location = sys.argv[2].strip()
     else:
-        industry = input("Enter industry: ").strip()
+        job_title = input("Enter job title: ").strip()
         location = input("Enter location: ").strip()
 
-    if not industry or not location:
-        print("Industry and location are required.")
+    if not job_title or not location:
+        print("Job title and location are required.")
         return
 
     initial_state = {
-        "industry": industry,
+        "industry": job_title,
+        "job_title": job_title,
         "location": location,
         "leads": [],
         "num_searches": 0,
         "report": "",
         "error": "",
         "search_results": [],
+        "seen_linkedin": set(),
     }
 
-    print(f"\nStarting lead research for '{industry}' in '{location}'...\n")
+    print(f"\nStarting lead research for '{job_title}' in '{location}'...\n")
 
     app = build_graph()
     final_state = app.invoke(initial_state)
@@ -48,6 +50,12 @@ def main():
     print("\n" + "=" * 60)
     print(final_state.get("report", "No report generated."))
     print(f"\nLeads saved to leads.csv")
+
+
+# Expose the graph for API usage
+def get_app():
+    """Get the compiled graph app for API usage."""
+    return build_graph()
 
 
 if __name__ == "__main__":
